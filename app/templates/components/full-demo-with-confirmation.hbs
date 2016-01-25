@@ -1,0 +1,17 @@
+{{!BEGIN-SNIPPET full-demo-with-confirmation}}
+{{#x-file-input multiple=true accept="image/gif,image/jpg,image/png" action=(action (mut files))}}
+  <button>⇧ Choose Files</button>
+{{/x-file-input}}
+
+{{#each files as |file|}}
+  <div class="file-upload">
+    {{#x-object-url blob=file as |url|}}
+      <div alt="file preview" class="image-preview" style="background-image: url({{url}})"></div>
+      <div class="image-file-name">{{file.name}}</div>
+    {{/x-object-url}}
+    {{#x-xml-http-request method="POST" data=file url="http://posttestserver.com/post.php" as |xhr|}}
+      <div style="width: 200px; height: 5px; background: linear-gradient(90deg, orange 0, orange {{xhr.upload.percentage}}%, rgba(100,100,100,1) {{xhr.upload.percentage}}%, rgba(100,100,100,1) 100%); "></div>
+    {{/x-xml-http-request}}
+  </div>
+{{/each}}
+{{!END-SNIPPET}}

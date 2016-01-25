@@ -1,0 +1,19 @@
+{{!BEGIN-SNIPPET file-chooser-only}}
+{{#x-file-input multiple=true action=(action (mut files))}}
+  <button>⇧ Choose Files</button>
+{{/x-file-input}}
+
+{{#each files as |file|}}
+  <ul class="file">
+    <li>
+      <label>name:</label> {{file.name}}
+    </li>
+    <li>
+      <label>type:</label> {{file.type}}
+    </li>
+    <li>
+      <label>size:</label> {{file.size}}
+    </li>
+  </ul>
+{{/each}}
+{{!END-SNIPPET}}

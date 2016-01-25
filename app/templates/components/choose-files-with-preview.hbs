@@ -1,0 +1,14 @@
+{{!BEGIN-SNIPPET choose-files-with-preview}}
+{{#x-file-input multiple=true action=(action (mut files)) accept="image/gif,image/jpg,image/png"}}
+  <button>⇧ Choose Files</button>
+{{/x-file-input}}
+
+{{#each files as |file|}}
+  <div class="file-upload">
+    {{#x-object-url blob=file as |url|}}
+      <div style="background-image: url({{url}})" class="image-preview" alt="file preview"></div>
+      <div class="image-file-name">{{file.name}}</div>
+    {{/x-object-url}}
+  </div>
+{{/each}}
+{{!END-SNIPPET}}
