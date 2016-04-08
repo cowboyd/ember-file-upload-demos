@@ -4,14 +4,20 @@
 {{/x-file-input}}
 
 {{#each files as |file|}}
-  <div class="file-upload">
-    {{#x-object-url blob=file as |url|}}
-      <div alt="file preview" class="image-preview" style="background-image: url({{url}})"></div>
-      <div class="image-file-name">{{file.name}}</div>
-    {{/x-object-url}}
-    {{#x-xml-http-request method="POST" data=file url="http://posttestserver.com/post.php" as |xhr|}}
+  {{#x-xml-http-request method="POST" url="http://posttestserver.com/post.php" as |xhr str|}}
+    Hello {{str}}
+    <div class="file-upload">
+      {{#x-object-url blob=file as |url|}}
+        <div alt="file preview" class="image-preview" style="background-image: url({{url}})"></div>
+        <div class="image-file-name">{{file.name}}</div>
+      {{/x-object-url}}
       <div style="width: 200px; height: 5px; background: linear-gradient(90deg, orange 0, orange {{xhr.upload.percentage}}%, rgba(100,100,100,1) {{xhr.upload.percentage}}%, rgba(100,100,100,1) 100%); "></div>
-    {{/x-xml-http-request}}
-  </div>
+    </div>
+    {{#if xhr.isLoadStarted}}
+      <button {{action (action xhr.abort)}}>Cancel</button>
+    {{else}}
+      <button {{action (action xhr.send file)}}>Send</button>
+    {{/if}}
+  {{/x-xml-http-request}}
 {{/each}}
 {{!END-SNIPPET}}
